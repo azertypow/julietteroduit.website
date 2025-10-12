@@ -1,0 +1,18 @@
+@import "../../../node_modules/modern-normalize/modern-normalize.css";
+
+:root {
+  --header-height: 3rem;
+}
+
+html {
+  font-family: serif;
+  font-size: 10px;
+}
+
+body {
+  font-size: 3rem;
+}
+
+a {
+  color: inherit;
+}
