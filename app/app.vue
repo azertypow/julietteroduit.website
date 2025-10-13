@@ -56,8 +56,7 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
   flex-wrap: nowrap;
   justify-content: space-between;
   z-index: 100;
-  padding-left: 3rem;
-  padding-right: 3rem;
+  padding: 1rem 3rem;
 
   > * {
     color: inherit;

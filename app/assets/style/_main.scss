@@ -1,16 +1,25 @@
 @import "../../../node_modules/modern-normalize/modern-normalize.css";
 
+
+@font-face {
+  font-family: 'ESKlarheitGrotesk';
+  src: url('/ESKlarheitGrotesk-Bk.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --header-height: 3rem;
 }
 
 html {
-  font-family: serif;
+  font-family: 'ESKlarheitGrotesk', serif;
   font-size: 10px;
 }
 
 body {
   font-size: 3rem;
+  line-height: 1.25em;
 }
 
 a {

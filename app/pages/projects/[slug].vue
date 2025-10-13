@@ -2,12 +2,14 @@
   <main class="v-projects-slug"
   >
     <template v-if="data">
-      <section class="v-projects-slug__gallery-container">
-        <div class="v-projects-slug__gallery-container__item"
-             v-for="image of data.result.page.gallery">
-          <img class="v-projects-slug__gallery-container__item__img"
-               :src="image.large"
-          />
+      <section class="v-projects-slug__gallery">
+        <div class="v-projects-slug__gallery__container">
+          <div class="v-projects-slug__gallery__container__item"
+               v-for="image of data.result.page.gallery">
+            <img class="v-projects-slug__gallery__container__item__img"
+                 :src="image.large"
+            />
+          </div>
         </div>
       </section>
 
@@ -107,21 +109,45 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
 
 
 <style lang="scss" scoped>
-.v-projects-slug__gallery-container {
-  display: flex;
-  flex-wrap: nowrap;
+.v-projects-slug__gallery {
+  width: 100%;
+  overflow: auto;
 }
 
-.v-projects-slug__gallery-container__item {
+.v-projects-slug__gallery__container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 3rem;
+}
+
+.v-projects-slug__gallery__container__item {
   display: block;
 }
 
-.v-projects-slug__gallery-container__item__img {
+.v-projects-slug__gallery__container__item__img {
   height: 100vh;
   width: auto;
-  max-width: 50vw;
+  //max-width: 50vw;
   object-fit: contain;
   object-position: top;
+}
+
+.v-projects-slug__info-container {
+  margin-top: -5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  font-size: 2rem;
+  line-height: 1.25em;
+}
+
+.v-projects-slug__info-container__header {
+  h1 {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 400;
+  }
+
+  padding-bottom: 5rem;
 }
 
 .v-projects-slug__info-container__main {
@@ -139,6 +165,15 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
     &:first-child {
       flex-shrink: 0;
     }
+  }
+}
+
+.v-projects-slug__info-container__main__content {
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
   }
 }
 </style>
