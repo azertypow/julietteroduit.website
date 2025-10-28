@@ -21,12 +21,12 @@
         <main class="v-projects-slug__info-container__main">
           <div class="v-projects-slug__info-container__main__infos">
             <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Client:</div>
+              <div>Client·exs:</div>
               <div v-html="data.result.page.client"/>
             </div>
 
             <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Localisation:</div>
+              <div>Lieu:</div>
               <div v-html="data.result.page.localisation"/>
             </div>
 
@@ -112,6 +112,7 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
 .v-projects-slug__gallery {
   width: 100%;
   overflow: auto;
+  //overscroll-behavior: contain;
 }
 
 .v-projects-slug__gallery__container {
