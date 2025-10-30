@@ -8,8 +8,10 @@ type CMS_API_Image_with_details = {
     "template": string,
     "type": string,
     "url": string,
-    "width": 50
+    "width": number
 }
+
+type CMS_API_PROJECT_type = "Scénographie" | "Mobilier" | "Architecture"
 
 type CMS_API_BLOCK_theme_options =
     'dark-green'
@@ -19,6 +21,7 @@ type CMS_API_BLOCK_theme_options =
     | 'grey'
 
 type CMS_API_ImageObject_default = {
+    "ratio": number
     "alt":      null,
     "tiny":     string,
     "small":    string,
