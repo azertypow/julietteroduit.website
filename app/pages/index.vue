@@ -19,9 +19,8 @@
                     'app-grid__wrap__col-5-27': project.type === 'Mobilier' && cover.ratio <= 1,
                    }"
                    v-for="cover of project.covers" :to="`/projects/${project.slug}`">
-          <h2 class="v-index__projects__project__title"
-          >{{project.title}}</h2>
-          {{cover.ratio}}
+<!--          <h2 class="v-index__projects__project__title"-->
+<!--          >{{project.title}}</h2>-->
           <img class="v-index__projects__project__cover"
                :src="cover.small"
           />
