@@ -1,5 +1,8 @@
 <template>
   <main class="v-projects-slug"
+        :class="{
+          'is-open': infoIsOpen,
+        }"
   >
     <template v-if="data">
       <section class="v-projects-slug__gallery" ref="galleryRef">
@@ -13,10 +16,34 @@
         </div>
       </section>
 
-      <section class="v-projects-slug__info-container">
-        <header class="v-projects-slug__info-container__header">
+
+      <header class="v-projects-slug__info-header-toggle"
+              v-if="!infoIsOpen"
+              @click="infoIsOpen = true"
+      >
+        <h1>{{data.result.page.title}}</h1>
+
+        <button aria-label="Ouvrir les infos"
+                @click="infoIsOpen = true"
+                v-if="!infoIsOpen"
+        >Infos</button>
+      </header>
+
+
+      <section class="v-projects-slug__info-container"
+               v-if="infoIsOpen"
+      >
+        <header class="v-projects-slug__info-container__header"
+                @click="infoIsOpen = false"
+        >
           <h1>{{data.result.page.title}}</h1>
-          <button @click="openInfos">Infos</button>
+
+          <button aria-label="Fermer les Infos"
+                  @click="infoIsOpen = false"
+          >
+            <svg aria-hidden="true"
+                 xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+          </button>
         </header>
 
         <main class="v-projects-slug__info-container__main">
@@ -56,6 +83,7 @@
 
 const slug = useRoute().params.slug
 const galleryRef = ref<HTMLElement | null>(null)
+const infoIsOpen = ref(false)
 
 type FetchData = CMS_API_Response & {
   result: {
@@ -118,8 +146,6 @@ onMounted(() => {
   }
 })
 
-const openInfos = () => {}
-
 </script>
 
 
@@ -146,24 +172,58 @@ const openInfos = () => {}
   //max-width: 50vw;
   object-fit: contain;
   object-position: top;
+
+  .is-open & {
+    height: 50vh;
+  }
 }
 
-.v-projects-slug__info-container {
-  margin-top: -5rem;
-  padding-left: 3rem;
-  padding-right: 3rem;
-  font-size: 2rem;
-  line-height: 1.25em;
-}
+.v-projects-slug__info-header-toggle {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 3rem;
 
-.v-projects-slug__info-container__header {
-  h1 {
+  > * {
     margin: 0;
     font-size: 3rem;
     font-weight: 400;
   }
 
+}
+
+.v-projects-slug__info-container {
+  padding: 1rem 3rem;
+  font-size: 2rem;
+  line-height: 1.25em;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: white;
+}
+
+.v-projects-slug__info-container__header {
   padding-bottom: 5rem;
+  display: flex;
+  justify-content: space-between;
+
+  > * {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 400;
+  }
+
+  svg {
+    display: block;
+    width: auto;
+    height: 3rem;
+  }
+
 }
 
 .v-projects-slug__info-container__main {
