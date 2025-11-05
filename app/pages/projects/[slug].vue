@@ -2,7 +2,7 @@
   <main class="v-projects-slug"
   >
     <template v-if="data">
-      <section class="v-projects-slug__gallery">
+      <section class="v-projects-slug__gallery" ref="galleryRef">
         <div class="v-projects-slug__gallery__container">
           <div class="v-projects-slug__gallery__container__item"
                v-for="image of data.result.page.gallery">
@@ -16,6 +16,7 @@
       <section class="v-projects-slug__info-container">
         <header class="v-projects-slug__info-container__header">
           <h1>{{data.result.page.title}}</h1>
+          <button @click="openInfos">Infos</button>
         </header>
 
         <main class="v-projects-slug__info-container__main">
@@ -54,6 +55,7 @@
 <script setup lang="ts">
 
 const slug = useRoute().params.slug
+const galleryRef = ref<HTMLElement | null>(null)
 
 type FetchData = CMS_API_Response & {
   result: {
@@ -104,6 +106,19 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
     },
   }
 })
+
+onMounted(() => {
+  if (galleryRef.value) {
+    galleryRef.value.addEventListener('wheel', (e: WheelEvent) => {
+      e.preventDefault()
+      if (galleryRef.value) {
+        galleryRef.value.scrollLeft += e.deltaY
+      }
+    }, { passive: false })
+  }
+})
+
+const openInfos = () => {}
 
 </script>
 
