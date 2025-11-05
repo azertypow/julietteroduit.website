@@ -22,6 +22,7 @@
 <!--          <h2 class="v-index__projects__project__title"-->
 <!--          >{{project.title}}</h2>-->
           <img class="v-index__projects__project__cover"
+               :style="{ transform: `translateY(${Math.random() * 10 - (-10)}%)` }"
                :src="cover.small"
           />
         </nuxt-link>
