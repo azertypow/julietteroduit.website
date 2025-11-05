@@ -89,7 +89,7 @@ const randomProjectsOrder: ComputedRef<CMS_API_Response_page[]> = computed(() =>
 
 <style lang="scss" scoped>
 .v-index__projects {
-  padding-top: var(--header-height);
+  padding: var(--header-height) 3rem 1rem;
 }
 
 .v-index__projects__project {

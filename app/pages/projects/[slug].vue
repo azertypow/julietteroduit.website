@@ -167,7 +167,7 @@ onMounted(() => {
 }
 
 .v-projects-slug__gallery__container__item__img {
-  height: 100vh;
+  height: calc( 100vh - 6rem );
   width: auto;
   //max-width: 50vw;
   object-fit: contain;
@@ -185,7 +185,11 @@ onMounted(() => {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem 3rem;
+  background: white;
+  box-sizing: border-box;
+  height: 6rem;
 
   > * {
     margin: 0;
