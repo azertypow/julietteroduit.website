@@ -5,7 +5,8 @@
     >
       <NuxtLink to="/"
       >{{data?.result.site.title}}</NuxtLink>
-      <div>À propos</div>
+      <NuxtLink to="/about"
+      >À propos</NuxtLink>
     </header>
     <div>
       <NuxtPage />
@@ -57,6 +58,7 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
   justify-content: space-between;
   z-index: 100;
   padding: 1rem 3rem;
+  background: white;
 
   > * {
     color: inherit;
