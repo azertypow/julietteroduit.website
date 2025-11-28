@@ -2,7 +2,7 @@
   <main class="v-index"
   >
     <div v-if="data" class="v-index__projects app-grid__wrap">
-      <template v-for="project of randomProjectsOrder">
+      <template v-for="project of data.result.pages">
         <nuxt-link class="v-index__projects__project"
                    :class="{
                     'app-grid__wrap__col-12-27':
@@ -77,11 +77,6 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
       }
     },
   }
-})
-
-const randomProjectsOrder: ComputedRef<CMS_API_Response_page[]> = computed(() => {
-  if(!data.value) return []
-  return randomArray(data.value.result.pages)
 })
 
 </script>
