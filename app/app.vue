@@ -3,8 +3,8 @@
   >
     <header class="v-index__header"
     >
-      <NuxtLink to="/"
-      >{{data?.result.site.title}}</NuxtLink>
+<!--      <NuxtLink to="/"-->
+<!--      >{{data?.result.site.title}}</NuxtLink>-->
       <NuxtLink to="/about"
       >À propos</NuxtLink>
     </header>

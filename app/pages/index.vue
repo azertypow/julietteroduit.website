@@ -2,30 +2,8 @@
   <main class="v-index"
   >
     <div v-if="data" class="v-index__projects app-grid__wrap">
-      <template v-for="project of randomProjectsOrder">
-        <nuxt-link class="v-index__projects__project"
-                   :class="{
-                    'app-grid__wrap__col-12-27':
-                        project.type === 'Architecture' && cover.ratio > 1,
-
-                    'app-grid__wrap__col-9-27':
-                        project.type === 'Architecture' && cover.ratio <= 1
-                        || project.type === 'Scénographie' && cover.ratio > 1,
-
-                    'app-grid__wrap__col-7-27':
-                        project.type === 'Scénographie' && cover.ratio <= 1,
-
-                    'app-grid__wrap__col-6-27': project.type === 'Mobilier' && cover.ratio > 1,
-                    'app-grid__wrap__col-5-27': project.type === 'Mobilier' && cover.ratio <= 1,
-                   }"
-                   v-for="cover of project.covers" :to="`/projects/${project.slug}`">
-<!--          <h2 class="v-index__projects__project__title"-->
-<!--          >{{project.title}}</h2>-->
-          <img class="v-index__projects__project__cover"
-               :style="{ transform: `translateY(${Math.random() * 10 - (-10)}%)` }"
-               :src="cover.small"
-          />
-        </nuxt-link>
+      <template v-for="project of projectItem">
+        {{project.title}}
       </template>
     </div>
   </main>
@@ -33,8 +11,7 @@
 
 
 <script setup lang="ts">
-
-import randomArray from "~/composables/randomArray";
+const projectItem = ref<APiImageData[]>([])
 
 type CMS_API_Response_page = {
   "title": string,
@@ -66,22 +43,51 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
             select: {
               ratio: 'file.ratio',
               alt: "file.alt.value",
-              tiny: 'file.resize(50, null, 10).url',
-              small: 'file.resize(500).url',
-              reg: 'file.resize(1280).url',
-              large: 'file.resize(1920).url',
-              xxl: 'file.resize(2500).url',
+              tiny: 'file.resize(50, null, 10)',
+              small: 'file.resize(500)',
+              reg: 'file.resize(1280)',
+              large: 'file.resize(1920)',
+              xxl: 'file.resize(2500)',
             },
           },
         }
       }
     },
   }
-})
+}).then(res => {
 
-const randomProjectsOrder: ComputedRef<CMS_API_Response_page[]> = computed(() => {
-  if(!data.value) return []
-  return randomArray(data.value.result.pages)
+  if (res.data.value) {
+
+    const itemsToPlace: APiImageData[]  = res.data.value.result.pages.map(page => page.covers.map(image => {
+      return {
+        url: image.large.url,
+        width: image.large.width,
+        height: image.large.height,
+        x: 0,
+        y: 0,
+        title: page.title,
+        slug: page.slug,
+      }
+    })).flat()
+
+
+    if (import.meta.client) {
+      projectItem.value = layoutMosaic(itemsToPlace, window.innerWidth).dataPositions
+
+    } else {
+      projectItem.value = itemsToPlace
+    }
+
+    console.log(itemsToPlace)
+
+  }
+
+
+
+  return {
+    data: res.data,
+    status: res.status,
+  }
 })
 
 </script>
