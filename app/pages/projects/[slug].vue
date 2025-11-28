@@ -20,13 +20,9 @@
       <header class="v-projects-slug__info-header-toggle"
               v-if="!infoIsOpen"
               @click="infoIsOpen = true"
+              aria-label="Ouvrir les infos"
       >
         <h1>{{data.result.page.title}}</h1>
-
-        <button aria-label="Ouvrir les infos"
-                @click="infoIsOpen = true"
-                v-if="!infoIsOpen"
-        >Infos</button>
       </header>
 
 
@@ -190,6 +186,7 @@ onMounted(() => {
   background: white;
   box-sizing: border-box;
   height: 6rem;
+  cursor: pointer;
 
   > * {
     margin: 0;
@@ -215,6 +212,7 @@ onMounted(() => {
   padding-bottom: 5rem;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 
   > * {
     margin: 0;
