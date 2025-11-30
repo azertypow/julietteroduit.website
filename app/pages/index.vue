@@ -2,17 +2,18 @@
   <main class="v-index"
   >
     <div v-if="data" class="v-index__projects">
-      <div v-for="project of projectItem"
-           class="v-index__projects__project"
-           :style="{
-                width: `${project.width}px`,
-                height: `${project.height}px`,
-                left: `${project.x}px`,
-                top: `${project.y}px`
-           }"
+      <nuxt-link v-for="project of projectItem"
+                 :to="`/projects/${project.slug}`"
+                 class="v-index__projects__project"
+                 :style="{
+                    width: `${project.width}px`,
+                    height: `${project.height}px`,
+                    left: `${project.x}px`,
+                    top: `${project.y}px`
+                 }"
       >
         <img :src="project.url" :alt="project.title" class="v-index__projects__project__cover">
-      </div>
+      </nuxt-link>
     </div>
   </main>
 </template>

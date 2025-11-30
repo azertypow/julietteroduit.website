@@ -173,7 +173,7 @@ function scrollEventListener() {
 }
 
 .v-projects-slug__gallery__container__item__img {
-  height: calc( 100vh - 6rem );
+  height: calc( 100vh - 6rem - var(--header-height) );
   width: auto;
   //max-width: 50vw;
   object-fit: contain;
