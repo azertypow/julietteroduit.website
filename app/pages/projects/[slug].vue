@@ -9,7 +9,7 @@
           <div class="v-projects-slug__gallery__container__item"
                v-for="image of data.result.page.gallery">
             <img class="v-projects-slug__gallery__container__item__img"
-                 :src="image.large"
+                 :src="image.large.url"
                  :alt="image.alt"
             />
           </div>
@@ -121,11 +121,11 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
             query: "page.gallery.toFiles",
             select: {
               alt: "file.alt.value",
-              tiny: 'file.resize(50, null, 10).url',
-              small: 'file.resize(500).url',
-              reg: 'file.resize(1280).url',
-              large: 'file.resize(1920).url',
-              xxl: 'file.resize(2500).url',
+              tiny: 'file.resize(50, null, 10)',
+              small: 'file.resize(500)',
+              reg: 'file.resize(1280)',
+              large: 'file.resize(1920)',
+              xxl: 'file.resize(2500)',
             },
           },
         }
