@@ -129,10 +129,25 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
       }
     },
   }
+}).then( res => {
+
+  nextTick().then( () => {
+    window.setTimeout( scrollEventListener, 500 )
+  } )
+
+  return {
+    data: res.data,
+    status: res.status,
+  }
 })
 
-onMounted(() => {
+
+async function scrollEventListener() {
+
+  console.log(galleryRef.value)
+
   if (galleryRef.value) {
+    console.log('add scroll')
     galleryRef.value.addEventListener('wheel', (e: WheelEvent) => {
       e.preventDefault()
       if (galleryRef.value) {
@@ -140,7 +155,7 @@ onMounted(() => {
       }
     }, { passive: false })
   }
-})
+}
 
 </script>
 
