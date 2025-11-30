@@ -183,7 +183,6 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 3rem;
-  background: white;
   box-sizing: border-box;
   height: 6rem;
   cursor: pointer;
@@ -197,7 +196,7 @@ onMounted(() => {
 }
 
 .v-projects-slug__info-container {
-  padding: 1rem 3rem;
+  padding: 2rem 3rem;
   font-size: 2rem;
   line-height: 1.25em;
   position: fixed;
