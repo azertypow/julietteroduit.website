@@ -4,73 +4,76 @@
           'is-open': infoIsOpen,
         }"
   >
-    <template v-if="data">
       <section class="v-projects-slug__gallery" ref="galleryRef">
-        <div class="v-projects-slug__gallery__container">
+        <div v-if="data" class="v-projects-slug__gallery__container">
           <div class="v-projects-slug__gallery__container__item"
                v-for="image of data.result.page.gallery">
             <img class="v-projects-slug__gallery__container__item__img"
                  :src="image.large"
+                 :alt="image.alt"
             />
           </div>
         </div>
       </section>
 
 
-      <header class="v-projects-slug__info-header-toggle"
-              v-if="!infoIsOpen"
-              @click="infoIsOpen = true"
-              aria-label="Ouvrir les infos"
-      >
-        <h1>{{data.result.page.title}}</h1>
-      </header>
+      <template v-if="data">
 
-
-      <section class="v-projects-slug__info-container"
-               v-if="infoIsOpen"
-      >
-        <header class="v-projects-slug__info-container__header"
-                @click="infoIsOpen = false"
+        <header class="v-projects-slug__info-header-toggle"
+                v-if="!infoIsOpen"
+                @click="infoIsOpen = true"
+                aria-label="Ouvrir les infos"
         >
           <h1>{{data.result.page.title}}</h1>
-
-          <button aria-label="Fermer les Infos"
-                  @click="infoIsOpen = false"
-          >
-            <svg aria-hidden="true"
-                 xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-          </button>
         </header>
 
-        <main class="v-projects-slug__info-container__main">
-          <div class="v-projects-slug__info-container__main__infos">
-            <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Client·exs&nbsp;:</div>
-              <div v-html="data.result.page.client"/>
+        <section class="v-projects-slug__info-container"
+                 v-if="infoIsOpen"
+        >
+          <header class="v-projects-slug__info-container__header"
+                  @click="infoIsOpen = false"
+          >
+            <h1>{{data.result.page.title}}</h1>
+
+            <button aria-label="Fermer les Infos"
+                    @click="infoIsOpen = false"
+            >
+              <svg aria-hidden="true"
+                   xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            </button>
+          </header>
+
+          <main class="v-projects-slug__info-container__main">
+            <div class="v-projects-slug__info-container__main__infos">
+              <div class="v-projects-slug__info-container__main__infos__item" >
+                <div>Client·exs&nbsp;:</div>
+                <div v-html="data.result.page.client"/>
+              </div>
+
+              <div class="v-projects-slug__info-container__main__infos__item" >
+                <div>Lieu&nbsp;:</div>
+                <div v-html="data.result.page.localisation"/>
+              </div>
+
+              <div class="v-projects-slug__info-container__main__infos__item" >
+                <div>Année&nbsp;:</div>
+                <div>{{new Date(data.result.page.date).getFullYear()}}</div>
+              </div>
+
+              <div class="v-projects-slug__info-container__main__infos__item" >
+                <div>Photos&nbsp;:</div>
+                <div v-html="data.result.page.photo_credits"/>
+              </div>
             </div>
 
-            <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Lieu&nbsp;:</div>
-              <div v-html="data.result.page.localisation"/>
-            </div>
+            <div class="v-projects-slug__info-container__main__content"
+                 v-html="data.result.page.content"
+            />
+          </main>
+        </section>
 
-            <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Année&nbsp;:</div>
-              <div>{{new Date(data.result.page.date).getFullYear()}}</div>
-            </div>
+      </template>
 
-            <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Photos&nbsp;:</div>
-              <div v-html="data.result.page.photo_credits"/>
-            </div>
-          </div>
-
-          <div class="v-projects-slug__info-container__main__content"
-               v-html="data.result.page.content"
-          />
-        </main>
-      </section>
-    </template>
   </main>
 </template>
 
@@ -129,20 +132,13 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
       }
     },
   }
-}).then( res => {
-
-  nextTick().then( () => {
-    window.setTimeout( scrollEventListener, 500 )
-  } )
-
-  return {
-    data: res.data,
-    status: res.status,
-  }
 })
 
+onMounted(() => {
+  scrollEventListener()
+})
 
-async function scrollEventListener() {
+function scrollEventListener() {
 
   console.log(galleryRef.value)
 
