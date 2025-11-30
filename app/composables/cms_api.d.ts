@@ -22,7 +22,7 @@ type CMS_API_BLOCK_theme_options =
 
 type CMS_API_ImageObject_default = {
     "ratio": number
-    "alt":      null,
+    "alt":      string
     "tiny":     string,
     "small":    string,
     "reg":      string,
