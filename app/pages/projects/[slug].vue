@@ -45,22 +45,22 @@
         <main class="v-projects-slug__info-container__main">
           <div class="v-projects-slug__info-container__main__infos">
             <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Client·exs:</div>
+              <div>Client·exs&nbsp;:</div>
               <div v-html="data.result.page.client"/>
             </div>
 
             <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Lieu:</div>
+              <div>Lieu&nbsp;:</div>
               <div v-html="data.result.page.localisation"/>
             </div>
 
             <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Date:</div>
+              <div>Année&nbsp;:</div>
               <div>{{new Date(data.result.page.date).getFullYear()}}</div>
             </div>
 
             <div class="v-projects-slug__info-container__main__infos__item" >
-              <div>Crédit:</div>
+              <div>Photos&nbsp;:</div>
               <div v-html="data.result.page.photo_credits"/>
             </div>
           </div>
