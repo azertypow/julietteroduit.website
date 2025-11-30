@@ -23,11 +23,24 @@ type CMS_API_BLOCK_theme_options =
 type CMS_API_ImageObject_default = {
     "ratio": number
     "alt":      string
-    "tiny":     string,
-    "small":    string,
-    "reg":      string,
-    "large":    string,
-    "xxl":      string,
+    "tiny":     CMS_API_Image,
+    "small":    CMS_API_Image,
+    "reg":      CMS_API_Image,
+    "large":    CMS_API_Image,
+    "xxl":      CMS_API_Image,
+}
+
+type CMS_API_Image = {
+  extension: string
+  filename: string
+  height: number
+  id: string
+  mime: string
+  niceSize: string
+  template: string
+  type: string
+  url: string
+  width: number
 }
 
 type CMS_API_Response = {
