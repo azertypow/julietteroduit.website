@@ -12,20 +12,24 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
   maxY: number;
   dataPositions: APiImageData[]
 } {
-  const gap = 150
+  const gap = 100
   const dataPositions: APiImageData[] = []
 
   imagesList.forEach((image) => {
+    const imageRatio = image.width / image.height
+    const imageWidth = Math.floor( ((containerWidth + gap ) / 5) - gap )
+    const imageHeight = imageWidth / imageRatio
+
     // Chercher la meilleure position (la plus basse possible, puis la plus à gauche)
     let bestX = 0
     let bestY = 0
     let foundPosition = false
 
     // Essayer de placer l'image à différentes positions
-    for (let y = 0; y < 1000000000000; y += 8) {
-      for (let x = 0; x <= containerWidth - image.width; x += 8) {
+    for (let y = 0; y < 1_000_000; y += gap) {
+      for (let x = 0; x <= containerWidth - imageWidth; x += 1) {
         // Vérifier si cette position est libre
-        const rect = { x, y, width: image.width, height: image.height }
+        const rect = { x, y, width: imageWidth, height: imageHeight }
         const hasCollision = dataPositions.some(pos =>
           !(rect.x + rect.width + gap <= pos.x ||
             rect.x >= pos.x + pos.width + gap ||
@@ -48,8 +52,8 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
     dataPositions.push({
       x: bestX,
       y: bestY,
-      width: image.width,
-      height: image.height,
+      width: imageWidth,
+      height: imageHeight,
       slug: image.slug,
       title: image.title,
       url: image.url,

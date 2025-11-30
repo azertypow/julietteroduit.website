@@ -9,5 +9,10 @@ export default defineNuxtConfig({
     }
   },
   css: ['~/assets/style/_main.scss'],
-  devtools: { enabled: true }
+  devtools: {
+    enabled: true,
+  },
+  imports: {
+    scan: false,
+  },
 })

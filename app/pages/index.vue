@@ -1,16 +1,26 @@
 <template>
   <main class="v-index"
   >
-    <div v-if="data" class="v-index__projects app-grid__wrap">
-      <template v-for="project of projectItem">
-        {{project.title}}
-      </template>
+    <div v-if="data" class="v-index__projects">
+      <div v-for="project of projectItem"
+           class="v-index__projects__project"
+           :style="{
+                width: `${project.width}px`,
+                height: `${project.height}px`,
+                left: `${project.x}px`,
+                top: `${project.y}px`
+           }"
+      >
+        <img :src="project.url" :alt="project.title" class="v-index__projects__project__cover">
+      </div>
     </div>
   </main>
 </template>
 
 
 <script setup lang="ts">
+import {type APiImageData, layoutMosaic} from "~/composables/layoutMosaic";
+
 const projectItem = ref<APiImageData[]>([])
 
 type CMS_API_Response_page = {
@@ -27,7 +37,6 @@ type FetchData = CMS_API_Response & {
 }
 
 const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
-  lazy: true,
   method: 'POST',
   body: {
     query: 'site',
@@ -54,11 +63,17 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
       }
     },
   }
-}).then(res => {
+})
 
-  if (res.data.value) {
 
-    const itemsToPlace: APiImageData[]  = res.data.value.result.pages.map(page => page.covers.map(image => {
+onMounted(async () => {
+  await nextTick()
+
+  console.log(data.value)
+
+  if (data.value) {
+
+    const itemsToPlace: APiImageData[]  = data.value.result.pages.map(page => page.covers.map(image => {
       return {
         url: image.large.url,
         width: image.large.width,
@@ -81,25 +96,19 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
     console.log(itemsToPlace)
 
   }
-
-
-
-  return {
-    data: res.data,
-    status: res.status,
-  }
 })
+
 
 </script>
 
 
 <style lang="scss" scoped>
 .v-index__projects {
-  padding: var(--header-height) 3rem 1rem;
+  position: relative;
 }
 
 .v-index__projects__project {
-  position: relative;
+  position: absolute;
 }
 
 .v-index__projects__project__title {

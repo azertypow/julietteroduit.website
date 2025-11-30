@@ -143,7 +143,6 @@ function scrollEventListener() {
   console.log(galleryRef.value)
 
   if (galleryRef.value) {
-    console.log('add scroll')
     galleryRef.value.addEventListener('wheel', (e: WheelEvent) => {
       e.preventDefault()
       if (galleryRef.value) {

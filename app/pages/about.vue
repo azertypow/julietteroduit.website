@@ -50,7 +50,6 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
 
 <style lang="scss" scoped>
 .v-about__content {
-  padding-top: var(--header-height);
   padding-left: 3rem;
   padding-right: 3rem;
   font-size: 2rem;

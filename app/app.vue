@@ -1,10 +1,10 @@
 <template>
-  <div class="v-index"
+  <div class="v-app"
   >
-    <header class="v-index__header"
+    <header class="v-app__header"
     >
-<!--      <NuxtLink to="/"-->
-<!--      >{{data?.result.site.title}}</NuxtLink>-->
+      <NuxtLink to="/"
+      >{{data?.result.site.title}}</NuxtLink>
       <NuxtLink to="/about"
       >À propos</NuxtLink>
     </header>
@@ -47,7 +47,11 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
 
 
 <style lang="scss" scoped>
-.v-index__header {
+.v-app {
+  padding-top: var(--header-height);
+}
+
+.v-app__header {
   height: var(--header-height);
   position: fixed;
   top: 0;
