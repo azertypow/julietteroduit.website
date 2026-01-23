@@ -17,8 +17,8 @@ const containerRef = ref<HTMLElement | null>(null)
 
 const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g
 const mailtoRegex = /href=["']mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})["']/g
-const telRegex = /([+]?[0-9]{1,3}[.\- ()0-9]*)/g
-const teltoRegex    = /href=["']tel:([+]?[0-9]{1,3}[.\- ()0-9]*)["']/g
+const telRegex = /(?<![0-9])(\+?[0-9]{1,4}[\s.\-()]?(?:[0-9][\s.\-()]?){6,14}[0-9])(?![0-9])/g
+const teltoRegex = /href=["']tel:([+0-9][\s.\-()0-9]{6,20})["']/g
 
 function encodeString(email: string): string {
   return btoa(email)
@@ -28,7 +28,7 @@ function obfuscateEmailText(text: string): string {
   return text
     .replace(emailRegex, (match) => {
       const encoded = encodeString(match)
-      return `<span class="obfusc-m" data-encoded-m="${encoded}">[email protégé, attendre]</span>`
+      return `<span class="obfusc-m" data-encoded-m="${encoded}">[email protégé]</span>`
     })
 }
 function obfuscateMailLinks(html: string): string {
@@ -43,7 +43,7 @@ function obfuscateTelText(text: string): string {
   return text
     .replace(telRegex, (match) => {
       const encoded = encodeString(match)
-      return `<span class="obfusc-t" data-encoded-t="${encoded}">[téléphone protégé, attendre]</span>`
+      return `<span class="obfusc-t" data-encoded-t="${encoded}">[téléphone protégé]</span>`
     })
 }
 
@@ -57,8 +57,8 @@ function obfuscateTelLinks(html: string): string {
 
 const processedContent = computed(() => {
   let content = props.textHtmlContent
-  // content = obfuscateMailLinks(content)
-  // content = obfuscateEmailText(content)
+  content = obfuscateMailLinks(content)
+  content = obfuscateEmailText(content)
   content = obfuscateTelText(content)
   content = obfuscateTelLinks(content)
   return content
@@ -94,15 +94,50 @@ function decodeAndReplaceEmails() {
   })
 }
 
+function decodeAndReplaceTels() {
+  if (!containerRef.value) return
+
+  const obfuscatedSpans = containerRef.value.querySelectorAll('.obfusc-t')
+  obfuscatedSpans.forEach((span) => {
+    const encoded = span.getAttribute('data-encoded-t')
+    if (encoded) {
+      try {
+        span.textContent = atob(encoded)
+      } catch (e) {
+        // Keep placeholder if decoding fails
+      }
+    }
+  })
+
+  const telLinks = containerRef.value.querySelectorAll('[data-tto-encoded]')
+  telLinks.forEach((link) => {
+    const encoded = link.getAttribute('data-tto-encoded')
+    if (encoded) {
+      try {
+        const decoded = atob(encoded)
+        link.setAttribute('href', `tel:${decoded}`)
+        link.removeAttribute('data-tto-encoded')
+      } catch (e) {
+        // Keep # href if decoding fails
+      }
+    }
+  })
+}
+
+function decodeAll() {
+  decodeAndReplaceEmails()
+  decodeAndReplaceTels()
+}
+
 onMounted(() => {
   nextTick(() => {
-    window.setTimeout(() => decodeAndReplaceEmails(), 1_000)
+    window.setTimeout(() => decodeAll(), 1_000)
   })
 })
 
 watch(() => props.textHtmlContent, () => {
   nextTick(() => {
-    window.setTimeout(() => decodeAndReplaceEmails(), 1_000)
+    window.setTimeout(() => decodeAll(), 1_000)
   })
 })
 </script>

@@ -6,6 +6,7 @@
       <NuxtLink to="/"
       >{{data?.result.site.title}}</NuxtLink>
       <NuxtLink to="/about"
+                v-if="useRoute().matched[0]?.path !== '/about'"
       >À propos</NuxtLink>
     </header>
     <div>

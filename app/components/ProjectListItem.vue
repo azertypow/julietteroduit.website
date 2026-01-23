@@ -1,10 +1,12 @@
 <template>
-    <section class="v-project-list-item"
+    <nuxt-link class="v-project-list-item"
+               :href="`projects/${slug}`"
     >
       <div class="v-project-list-item__title" >{{title}}</div>
       <div class="v-project-list-item__client" >{{client}}</div>
       <div class="v-project-list-item__year" >{{ new Date(date).getFullYear() }}</div>
-    </section>
+      <img class="v-project-list-item__cover" v-if="cover" :src="cover.url">
+    </nuxt-link>
 </template>
 
 
@@ -18,6 +20,8 @@ defineProps<{
   title: string
   client: string
   date: string
+  slug: string
+  cover?: CMS_API_Image
 }>()
 </script>
 
@@ -30,6 +34,8 @@ defineProps<{
   display: flex;
   width: 100%;
   gap: var(--app-gap);
+  text-decoration: none;
+  position: relative;
 }
 
 .v-project-list-item__title {
@@ -40,5 +46,18 @@ defineProps<{
 }
 .v-project-list-item__year {
   width: calc(100% / 12 * 2);
+}
+
+.v-project-list-item__cover {
+  position: absolute;
+  top: 100%;
+  left: calc(100% / 24 * 5);
+  display: none;
+  height: 33vh;
+  z-index: 10;
+
+  .v-project-list-item:hover & {
+    display: block;
+  }
 }
 </style>

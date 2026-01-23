@@ -17,6 +17,8 @@
                   :title="project.title"
                   :client="project.client"
                   :date="project.date"
+                  :slug="project.slug"
+                  :cover="project.covers[0]?.small"
                 />
               </template>
             </div>
@@ -100,6 +102,7 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
   padding-right: 3rem;
   font-size: 2rem;
   line-height: 1.25em;
+  padding-bottom: 50vh;
 }
 
 .v-about__content__header {
@@ -126,6 +129,15 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
 .v-about__projects-list {
   max-width: 120rem;
   padding-bottom: 2rem;
+
+}
+
+:global(.v-about__projects-list__content:hover .v-about__projects-list__content__body > * ) {
+  opacity: .25;
+}
+
+:global(.v-about__projects-list__content > .v-about__projects-list__content__body > *:hover ) {
+  opacity: 1;
 }
 
 .v-about__projects-list__content__header {
