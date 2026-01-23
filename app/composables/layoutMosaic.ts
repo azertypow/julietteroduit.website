@@ -43,7 +43,7 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
       else imgCollWidth = collWidthList.sceno_horizontale
     }
 
-    const imageWidth = Math.floor( (((containerWidth + gap ) / 24) * imgCollWidth) - gap )
+    const imageWidth = Math.floor( (((containerWidth + gap ) / 27) * imgCollWidth) - gap )
     const imageHeight = imageWidth / imageRatio
 
     // Chercher la meilleure position (la plus basse possible, puis la plus à gauche)
