@@ -6,7 +6,7 @@ export interface APiImageData {
   url: string,
   title: string,
   slug: string,
-  type: 'Architecture' | 'Scénographie' | 'Mobilier',
+  type: CMS_API_PROJECT_type,
 }
 
 export function layoutMosaic(imagesList: APiImageData[], containerWidth: number): {
