@@ -1,10 +1,8 @@
 .app-grid__wrap {
-  --gap: 10rem;
-
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  gap: var(--gap);
+  gap: var(--app-gap);
 
   .app-grid__wrap__col-1-27 {
     width: calc((((100% + var(--gap)) / 27) * 1) - var(--gap));
