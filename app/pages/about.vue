@@ -3,10 +3,8 @@
     <template v-if="data">
       <div class="v-about__content">
         <main class="v-about__content__main">
-          <div class="v-about__content__main__text"
-               v-html="data.result.page.content"
-          />
           <HtmlContentWithObfuscatedEmail
+            class="v-about__content__main__text"
             :text-html-content="data.result.page.content"
           />
         </main>
@@ -127,6 +125,7 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
 
 .v-about__projects-list {
   max-width: 120rem;
+  padding-bottom: 2rem;
 }
 
 .v-about__projects-list__content__header {
