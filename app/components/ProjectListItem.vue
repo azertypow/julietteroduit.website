@@ -3,11 +3,7 @@
     >
       <div class="v-project-list-item__title" >{{title}}</div>
       <div class="v-project-list-item__client" >{{client}}</div>
-      <div class="v-project-list-item__year" >
-        <div>
-          {{ new Date(date).getFullYear() }}
-        </div>
-      </div>
+      <div class="v-project-list-item__year" >{{ new Date(date).getFullYear() }}</div>
     </section>
 </template>
 
@@ -37,15 +33,12 @@ defineProps<{
 }
 
 .v-project-list-item__title {
-  width: calc(100% / 12 * 6);
+  width: calc(100% / 12 * 5);
 }
 .v-project-list-item__client {
-  width: calc(100% / 12 * 4);
+  width: calc(100% / 12 * 5);
 }
 .v-project-list-item__year {
-  display: flex;
   width: calc(100% / 12 * 2);
-  justify-content: flex-end;
-  flex-direction: column;
 }
 </style>
