@@ -5,19 +5,45 @@ export interface APiImageData {
   height: number,
   url: string,
   title: string,
-  slug: string
+  slug: string,
+  type: 'Architecture' | 'Scénographie' | 'Mobilier',
 }
 
 export function layoutMosaic(imagesList: APiImageData[], containerWidth: number): {
   maxY: number;
   dataPositions: APiImageData[]
 } {
-  const gap = 100
+  const gap = 200
   const dataPositions: APiImageData[] = []
 
   imagesList.forEach((image) => {
+
+    const collWidthList = {
+      archi_horizontale: 12,
+      archi_verticale: 9,
+      sceno_horizontale: 9,
+      sceno_verticale: 7,
+      mobilier_horizontale: 6,
+      mobilier_verticale: 5,
+    }
     const imageRatio = image.width / image.height
-    const imageWidth = Math.floor( ((containerWidth + gap ) / 5) - gap )
+
+    let imgCollWidth = 12
+
+    if(image.type === 'Architecture') {
+      if(imageRatio < 1) imgCollWidth = collWidthList.archi_verticale
+      else imgCollWidth = collWidthList.archi_horizontale
+    }
+    else if (image.type === 'Mobilier') {
+      if(imageRatio < 1) imgCollWidth = collWidthList.mobilier_verticale
+      else imgCollWidth = collWidthList.mobilier_horizontale
+    }
+    else if (image.type === 'Scénographie') {
+      if(imageRatio < 1) imgCollWidth = collWidthList.sceno_verticale
+      else imgCollWidth = collWidthList.sceno_horizontale
+    }
+
+    const imageWidth = Math.floor( (((containerWidth + gap ) / 24) * imgCollWidth) - gap )
     const imageHeight = imageWidth / imageRatio
 
     // Chercher la meilleure position (la plus basse possible, puis la plus à gauche)
@@ -57,6 +83,7 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
       slug: image.slug,
       title: image.title,
       url: image.url,
+      type: image.type,
     })
   })
 

@@ -83,6 +83,7 @@ onMounted(async () => {
         y: 0,
         title: page.title,
         slug: page.slug,
+        type: page.type,
       }
     })).flat()
 
