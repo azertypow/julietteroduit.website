@@ -17,38 +17,59 @@ const containerRef = ref<HTMLElement | null>(null)
 
 const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g
 const mailtoRegex = /href=["']mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})["']/g
+const telRegex = /([+]?[0-9]{1,3}[.\- ()0-9]*)/g
+const teltoRegex    = /href=["']tel:([+]?[0-9]{1,3}[.\- ()0-9]*)["']/g
 
-function encodeEmail(email: string): string {
+function encodeString(email: string): string {
   return btoa(email)
 }
 
-function obfuscateEmailInText(text: string): string {
-  return text.replace(emailRegex, (match) => {
-    const encoded = encodeEmail(match)
-    return `<span class="obfuscated-email" data-encoded="${encoded}">[email protégé, cliquez pour afficher]</span>`
-  })
+function obfuscateEmailText(text: string): string {
+  return text
+    .replace(emailRegex, (match) => {
+      const encoded = encodeString(match)
+      return `<span class="obfusc-m" data-encoded-m="${encoded}">[email protégé, attendre]</span>`
+    })
+}
+function obfuscateMailLinks(html: string): string {
+  return html
+    .replace(mailtoRegex, (match, email) => {
+      const encoded = encodeString(email)
+      return `href="#" data-mto-encoded="${encoded}"`
+    })
 }
 
-function obfuscateMailtoLinks(html: string): string {
-  return html.replace(mailtoRegex, (match, email) => {
-    const encoded = encodeEmail(email)
-    return `href="#" data-mailto-encoded="${encoded}"`
-  })
+function obfuscateTelText(text: string): string {
+  return text
+    .replace(telRegex, (match) => {
+      const encoded = encodeString(match)
+      return `<span class="obfusc-t" data-encoded-t="${encoded}">[téléphone protégé, attendre]</span>`
+    })
+}
+
+function obfuscateTelLinks(html: string): string {
+  return html
+    .replace(teltoRegex, (match, tel) => {
+      const encoded = encodeString(tel)
+      return `href="#" data-tto-encoded="${encoded}"`
+    })
 }
 
 const processedContent = computed(() => {
   let content = props.textHtmlContent
-  content = obfuscateMailtoLinks(content)
-  content = obfuscateEmailInText(content)
+  // content = obfuscateMailLinks(content)
+  // content = obfuscateEmailText(content)
+  content = obfuscateTelText(content)
+  content = obfuscateTelLinks(content)
   return content
 })
 
 function decodeAndReplaceEmails() {
   if (!containerRef.value) return
 
-  const obfuscatedSpans = containerRef.value.querySelectorAll('.obfuscated-email')
+  const obfuscatedSpans = containerRef.value.querySelectorAll('.obfusc-m')
   obfuscatedSpans.forEach((span) => {
-    const encoded = span.getAttribute('data-encoded')
+    const encoded = span.getAttribute('data-encoded-m')
     if (encoded) {
       try {
         span.textContent = atob(encoded)
@@ -58,14 +79,14 @@ function decodeAndReplaceEmails() {
     }
   })
 
-  const mailtoLinks = containerRef.value.querySelectorAll('[data-mailto-encoded]')
+  const mailtoLinks = containerRef.value.querySelectorAll('[data-mto-encoded]')
   mailtoLinks.forEach((link) => {
-    const encoded = link.getAttribute('data-mailto-encoded')
+    const encoded = link.getAttribute('data-mto-encoded')
     if (encoded) {
       try {
         const decoded = atob(encoded)
         link.setAttribute('href', `mailto:${decoded}`)
-        link.removeAttribute('data-mailto-encoded')
+        link.removeAttribute('data-mto-encoded')
       } catch (e) {
         // Keep # href if decoding fails
       }
@@ -88,7 +109,7 @@ watch(() => props.textHtmlContent, () => {
 
 <style lang="scss" scoped>
 .v-html-content-with-obfuscated-email {
-  :deep(.obfuscated-email) {
+  :deep(.obfusc-m) {
     // Style identique au texte environnant
   }
 }
