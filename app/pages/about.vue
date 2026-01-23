@@ -6,15 +6,13 @@
           <div class="v-about__content__main__text"
                v-html="data.result.page.content"
           />
+          <HtmlContentWithObfuscatedEmail
+            :text-html-content="data.result.page.content"
+          />
         </main>
         <section class="v-about__projects-list">
           <h2 class="v-about__projects-list__title">Liste des projets</h2>
           <div class="v-about__projects-list__content">
-            <div class="v-about__projects-list__content__header">
-              <div class="v-about__projects-list__content__header__title app-font-h2">Titre</div>
-              <div class="v-about__projects-list__content__header__client app-font-h2">Client</div>
-              <div class="v-about__projects-list__content__header__year app-font-h2">Année</div>
-            </div>
             <div class="v-about__projects-list__content__body">
               <template v-for="project of data.result.projects">
                 <ProjectListItem
@@ -35,6 +33,7 @@
 <script setup lang="ts">
 
 import ProjectListItem from "~/components/ProjectListItem.vue";
+import HtmlContentWithObfuscatedEmail from "~/components/HtmlContentWithObfuscatedEmail.vue";
 
 type FetchData = CMS_API_Response & {
   result: {
