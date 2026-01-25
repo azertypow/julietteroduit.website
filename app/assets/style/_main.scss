@@ -12,6 +12,7 @@
 :root {
   --header-height: 6rem;
   --app-gap: 2rem;
+  --app-gap--big: 3rem;
 }
 
 html {
@@ -49,6 +50,9 @@ html {
 body {
   font-size: 3rem;
   line-height: 1.25em;
+  box-sizing: border-box;
+  padding-left: var(--app-gap--big);
+  padding-right: var(--app-gap--big);
 }
 
 a {
