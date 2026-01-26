@@ -44,10 +44,10 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
   } = (() => {
 
     if(containerWidth < breakPoint.xs) return {
-      archi_horizontale: 5,
-      archi_verticale: 3,
-      sceno_horizontale: 4,
-      sceno_verticale: 3,
+      archi_horizontale: 6,
+      archi_verticale: 5,
+      sceno_horizontale: 5,
+      sceno_verticale: 4,
       mobilier_horizontale: 4,
       mobilier_verticale: 3,
     }
@@ -57,14 +57,14 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
       archi_verticale: 6,
       sceno_horizontale: 6,
       sceno_verticale: 5,
-      mobilier_horizontale: 6,
-      mobilier_verticale: 5,
+      mobilier_horizontale: 5,
+      mobilier_verticale: 4,
     }
 
     if(containerWidth < breakPoint.reg) return {
       archi_horizontale: 10,
       archi_verticale: 7,
-      sceno_horizontale: 7,
+      sceno_horizontale: 8,
       sceno_verticale: 6,
       mobilier_horizontale: 6,
       mobilier_verticale: 5,
