@@ -13,12 +13,64 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
   maxY: number;
   dataPositions: APiImageData[]
 } {
-  const gap = 200
+  const breakPoint = {
+    reg: 1200,
+    small: 900,
+    xs: 700,
+  }
   const dataPositions: APiImageData[] = []
 
-  imagesList.forEach((image) => {
+  const gap = (() => {
+    if(containerWidth < breakPoint.xs) return 50
+    if(containerWidth < breakPoint.small) return 100
+    if(containerWidth < breakPoint.reg)   return 150
+    return 200
+  })()
 
-    const collWidthList = {
+  const collNumber = (() => {
+    if(containerWidth < breakPoint.xs) return 10
+    if(containerWidth < breakPoint.small) return 15
+    if(containerWidth < breakPoint.reg)   return 20
+    return 27
+  })()
+
+  const collWidthList: {
+    archi_horizontale: number;
+    archi_verticale: number;
+    sceno_horizontale: number;
+    sceno_verticale: number;
+    mobilier_horizontale: number;
+    mobilier_verticale: number
+  } = (() => {
+
+    if(containerWidth < breakPoint.xs) return {
+      archi_horizontale: 5,
+      archi_verticale: 3,
+      sceno_horizontale: 4,
+      sceno_verticale: 3,
+      mobilier_horizontale: 4,
+      mobilier_verticale: 3,
+    }
+
+    if(containerWidth < breakPoint.small) return {
+      archi_horizontale: 7,
+      archi_verticale: 6,
+      sceno_horizontale: 6,
+      sceno_verticale: 5,
+      mobilier_horizontale: 6,
+      mobilier_verticale: 5,
+    }
+
+    if(containerWidth < breakPoint.reg) return {
+      archi_horizontale: 10,
+      archi_verticale: 7,
+      sceno_horizontale: 7,
+      sceno_verticale: 6,
+      mobilier_horizontale: 6,
+      mobilier_verticale: 5,
+    }
+
+    return {
       archi_horizontale: 12,
       archi_verticale: 9,
       sceno_horizontale: 9,
@@ -26,6 +78,11 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
       mobilier_horizontale: 6,
       mobilier_verticale: 5,
     }
+
+  })()
+
+  imagesList.forEach((image) => {
+
     const imageRatio = image.width / image.height
 
     let imgCollWidth = 12
@@ -43,7 +100,7 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
       else imgCollWidth = collWidthList.sceno_horizontale
     }
 
-    const imageWidth = Math.floor( (((containerWidth + gap ) / 27) * imgCollWidth) - gap )
+    const imageWidth = Math.floor( (((containerWidth + gap ) / collNumber) * imgCollWidth) - gap )
     const imageHeight = imageWidth / imageRatio
 
     // Chercher la meilleure position (la plus basse possible, puis la plus à gauche)
