@@ -109,7 +109,7 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
     let foundPosition = false
 
     // Essayer de placer l'image à différentes positions
-    for (let y = 0; y < 1_000_000; y += gap) {
+    for (let y = 0; y < 1_000_000; y += 10) {
       for (let x = 0; x <= containerWidth - imageWidth; x += 1) {
         // Vérifier si cette position est libre
         const rect = { x, y, width: imageWidth, height: imageHeight }
@@ -127,6 +127,7 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
           break
         }
       }
+      y += gap
       if (foundPosition) break
     }
 
