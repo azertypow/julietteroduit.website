@@ -75,8 +75,8 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
       archi_verticale: 9,
       sceno_horizontale: 9,
       sceno_verticale: 7,
-      mobilier_horizontale: 6,
-      mobilier_verticale: 5,
+      mobilier_horizontale: 8,
+      mobilier_verticale: 6,
     }
 
   })()
