@@ -9,7 +9,7 @@
           />
         </main>
         <section class="v-about__projects-list">
-          <h2 class="v-about__projects-list__title">Liste des projets</h2>
+          <h2 class="v-about__projects-list__title">Projets</h2>
           <div class="v-about__projects-list__content">
             <div class="v-about__projects-list__content__body">
               <template v-for="project of data.result.projects.sort((a, b) => b.date.localeCompare(a.date))">
