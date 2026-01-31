@@ -127,7 +127,6 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
           break
         }
       }
-      y += gap
       if (foundPosition) break
     }
 
