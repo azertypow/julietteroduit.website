@@ -12,7 +12,7 @@
           <h2 class="v-about__projects-list__title">Liste des projets</h2>
           <div class="v-about__projects-list__content">
             <div class="v-about__projects-list__content__body">
-              <template v-for="project of data.result.projects">
+              <template v-for="project of data.result.projects.sort((a, b) => b.date.localeCompare(a.date))">
                 <ProjectListItem
                   :title="project.title"
                   :client="project.client"
