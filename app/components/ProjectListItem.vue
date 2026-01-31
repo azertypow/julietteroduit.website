@@ -55,6 +55,7 @@ defineProps<{
   display: none;
   height: 33vh;
   z-index: 10;
+  pointer-events: none;
 
   .v-project-list-item:hover & {
     display: block;

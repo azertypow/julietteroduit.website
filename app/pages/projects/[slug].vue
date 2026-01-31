@@ -25,6 +25,7 @@
                 aria-label="Ouvrir les infos"
         >
           <h1>{{data.result.page.title}}</h1>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-120v-320H120v-80h320v-320h80v320h320v80H520v320h-80Z"/></svg>
         </header>
 
         <section class="v-projects-slug__info-container"
@@ -190,7 +191,8 @@ function scrollEventListener() {
   left: 0;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 1rem;
   align-items: center;
   padding: 1rem 3rem;
   box-sizing: border-box;
@@ -201,6 +203,13 @@ function scrollEventListener() {
     margin: 0;
     font-size: 3rem;
     font-weight: 400;
+    display: block;
+    fill: currentColor;
+  }
+
+  > svg {
+    height: 2.75rem;
+    width: auto;
   }
 
 }
