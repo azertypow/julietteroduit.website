@@ -18,7 +18,7 @@
                   :client="project.client"
                   :date="project.date"
                   :slug="project.slug"
-                  :cover="project.covers[0]?.small"
+                  :cover="project.miniature?.[0]?.small"
                 />
               </template>
             </div>
@@ -47,7 +47,7 @@ type FetchData = CMS_API_Response & {
       slug: string,
       date: string,
       client: string,
-      covers: CMS_API_ImageObject_default[]
+      miniature?: CMS_API_ImageObject_default[]
     }[]
   }
 }
@@ -75,8 +75,8 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
           slug: true,
           client: true,
           date: true,
-          covers: {
-            query: "page.covers.toFiles",
+          miniature: {
+            query: "page.miniature.toFiles",
             select: {
               ratio: 'file.ratio',
               alt: "file.alt.value",
