@@ -191,7 +191,7 @@ function scrollEventListener() {
   left: 0;
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 1rem;
   align-items: center;
   padding: 1rem 3rem;
