@@ -113,6 +113,7 @@ function generateMosaic() {
 
 .v-index__projects__project {
   position: absolute;
+  user-select: none;
 }
 
 .v-index__projects__project__title {
