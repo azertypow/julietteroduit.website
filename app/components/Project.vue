@@ -34,6 +34,7 @@ function onMouseEnter() {
 
 function onMouseLeave() {
   isHovering.value = false
+  console.log('leave')
 }
 
 function onMouseMove(event: MouseEvent) {
@@ -47,11 +48,21 @@ function onMouseMove(event: MouseEvent) {
 .v-project {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .v-index__projects__project__cover {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.v-project-list-item__miniature {
+  position: fixed;
+  display: block;
+  pointer-events: none;
+  height: 33vh;
+  width: auto;
+  z-index: 0;
 }
 </style>
