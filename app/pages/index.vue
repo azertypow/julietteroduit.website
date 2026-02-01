@@ -114,6 +114,8 @@ function generateMosaic() {
 .v-index__projects__project {
   position: absolute;
   user-select: none;
+  box-sizing: content-box;
+  padding-bottom: var(--app-gap--big);
 }
 
 .v-index__projects__project__title {
