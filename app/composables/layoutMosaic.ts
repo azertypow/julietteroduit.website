@@ -6,6 +6,7 @@ export interface APiImageData {
   url: string,
   title: string,
   slug: string,
+  miniature: string | null,
   type: CMS_API_PROJECT_type,
 }
 
@@ -141,6 +142,7 @@ export function layoutMosaic(imagesList: APiImageData[], containerWidth: number)
       title: image.title,
       url: image.url,
       type: image.type,
+      miniature: image.miniature,
     })
   })
 

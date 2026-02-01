@@ -3,18 +3,20 @@
   >
     <div class="v-index__projects">
       <template v-if="data">
-        <nuxt-link v-for="project of projectItem"
-                   :to="`/projects/${project.slug}`"
-                   class="v-index__projects__project"
-                   :style="{
-                      width: `${project.width}px`,
-                      height: `${project.height}px`,
-                      left: `${project.x}px`,
-                      top: `${project.y}px`
-                   }"
+
+        <div class="v-index__projects__project"
+             v-for="project of projectItem"
+             :style="{
+                width: `${project.width}px`,
+                height: `${project.height}px`,
+                left: `${project.x}px`,
+                top: `${project.y}px`
+             }"
         >
-          <img :src="project.url" :alt="project.title" class="v-index__projects__project__cover">
-        </nuxt-link>
+          <Project
+            :project="project"
+          />
+        </div>
       </template>
     </div>
   </main>
@@ -23,6 +25,7 @@
 
 <script setup lang="ts">
 import {type APiImageData, layoutMosaic} from "~/composables/layoutMosaic";
+import Project from "~/components/Project.vue";
 
 const projectItem = ref<APiImageData[]>([])
 
@@ -31,6 +34,7 @@ type CMS_API_Response_page = {
   "slug": string,
   "type": CMS_API_PROJECT_type,
   "covers": CMS_API_ImageObject_default[]
+  "miniature": CMS_API_ImageObject_default[]
 }
 
 type FetchData = CMS_API_Response & {
@@ -69,6 +73,18 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
               xxl: 'file.resize(2500)',
             },
           },
+          miniature: {
+            query: "page.miniature.toFiles",
+            select: {
+              ratio: 'file.ratio',
+              alt: "file.alt.value",
+              tiny: 'file.resize(50, null, 10)',
+              small: 'file.resize(500)',
+              reg: 'file.resize(1280)',
+              large: 'file.resize(1920)',
+              xxl: 'file.resize(2500)',
+            },
+          }
         }
       }
     },
@@ -89,6 +105,7 @@ function generateMosaic() {
       title: page.title,
       slug: page.slug,
       type: page.type,
+      miniature: page.miniature[0]?.small.url || null,
     }
   })).flat()
 
@@ -126,11 +143,6 @@ function generateMosaic() {
   font-weight: 400;
   margin: 0;
   text-align: right;
-}
-
-.v-index__projects__project__cover {
-  display: block;
-  width: 100%;
 }
 
 </style>
