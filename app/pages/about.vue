@@ -24,6 +24,11 @@
             </div>
           </div>
         </section>
+        <section class="v-about__credits">
+          <div v-html="data.result.page.credits"
+               class="v-about__credits__text"
+          />
+        </section>
       </div>
     </template>
   </main>
@@ -41,6 +46,7 @@ type FetchData = CMS_API_Response & {
       title: string
       slug: string
       content: string
+      credits: string
     },
     projects: {
       title: string,
@@ -66,6 +72,7 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
           content: {
             query: "page.content.content",
           },
+          credits: true,
         }
       },
       projects: {
@@ -98,8 +105,6 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
 
 <style lang="scss" scoped>
 .v-about__content {
-  padding-left: 3rem;
-  padding-right: 3rem;
   font-size: 2rem;
   line-height: 1.25em;
   padding-bottom: 50vh;
@@ -164,5 +169,20 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
 .v-about__projects-list__content__header__year {
   width: calc(100% / 12 * 2);
   margin: 0;
+}
+
+.v-about__credits {
+  position: sticky;
+  bottom: 0;
+  box-sizing: border-box;
+  background: white;
+}
+
+:global(.v-about__credits__text > *) {
+  font-size: 1.35rem;
+  line-height: 1.25em;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  color: rgba(0, 0, 0, .5);
 }
 </style>
