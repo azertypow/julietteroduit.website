@@ -19,6 +19,10 @@ html {
   font-family: 'ESKlarheitGrotesk', serif;
   font-size: 10px;
 
+  @media (max-width: 770px) {
+    font-size: 7px;
+  }
+
   /* Scrollbar personnalisée pour Firefox */
   scrollbar-width: thin;
   scrollbar-color: rgb(196, 196, 196) transparent;
