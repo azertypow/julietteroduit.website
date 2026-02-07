@@ -1,6 +1,6 @@
 <template>
     <nuxt-link class="v-project-list-item"
-               :href="`projects/${slug}`"
+               :href="`/projects/${slug}`"
     >
       <div class="v-project-list-item__title" >{{title}}</div>
       <div class="v-project-list-item__client" >{{client}}</div>
