@@ -17,7 +17,5 @@ export default defineEventHandler(async (event) => {
         timeout: 5_000,
     })
 
-    // console.log('api url', `${useRuntimeConfig().public.apiUrl}/api/query`, 'dataApi', dataApi)
-
     return dataApi
 })

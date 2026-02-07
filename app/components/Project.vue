@@ -64,7 +64,6 @@ function onMouseEnter() {
 
 function onMouseLeave() {
   isHovering.value = false
-  console.log('leave')
 }
 
 function onMouseMove(event: MouseEvent) {

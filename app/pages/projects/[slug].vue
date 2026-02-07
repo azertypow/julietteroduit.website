@@ -140,9 +140,6 @@ onMounted(() => {
 })
 
 function scrollEventListener() {
-
-  console.log(galleryRef.value)
-
   if (galleryRef.value) {
     galleryRef.value.addEventListener('wheel', (e: WheelEvent) => {
       e.preventDefault()
