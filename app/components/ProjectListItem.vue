@@ -39,13 +39,14 @@ defineProps<{
 }
 
 .v-project-list-item__title {
-  width: calc(100% / 12 * 5);
+  width: calc(100% / 12 * 6);
 }
 .v-project-list-item__client {
   width: calc(100% / 12 * 5);
 }
 .v-project-list-item__year {
-  width: calc(100% / 12 * 2);
+  width: calc(100% / 12 * 1);
+  text-align: right;
 }
 
 .v-project-list-item__cover {
