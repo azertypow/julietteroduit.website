@@ -63,6 +63,6 @@ function onMouseMove(event: MouseEvent) {
   pointer-events: none;
   height: 33vh;
   width: auto;
-  z-index: 0;
+  z-index: 10;
 }
 </style>
