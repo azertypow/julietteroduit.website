@@ -68,8 +68,8 @@ function onMouseLeave() {
 }
 
 function onMouseMove(event: MouseEvent) {
-  mouseX.value = (event.clientX + miniatureWidth.value >= window.innerWidth)    ? event.clientX - miniatureWidth.value : event.clientX
-  mouseY.value = (event.clientY + miniatureHeight.value >= window.innerHeight)  ? event.clientY - miniatureHeight.value : event.clientY
+  mouseX.value = (event.clientX >= window.innerWidth / 2)   ? event.clientX - miniatureWidth.value : event.clientX
+  mouseY.value = (event.clientY >= window.innerHeight / 2)  ? event.clientY - miniatureHeight.value : event.clientY
 }
 </script>
 
