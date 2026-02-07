@@ -189,9 +189,10 @@ function scrollEventListener() {
   //max-width: 50vw;
   object-fit: contain;
   object-position: top;
+  transition: height 1s ease-in-out;
 
   .is-open & {
-    height: 50vh;
+    height: calc( 50vh - var(--header-height) );
   }
 }
 
@@ -232,8 +233,9 @@ function scrollEventListener() {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50%;
+  height: 50vh;
   background: white;
+  box-sizing: border-box;
 }
 
 .v-projects-slug__info-container__header {
