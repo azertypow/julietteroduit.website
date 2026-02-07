@@ -29,7 +29,7 @@
         </header>
 
         <section class="v-projects-slug__info-container"
-                 v-if="infoIsOpen"
+                 v-else-if="infoIsOpen"
         >
           <header class="v-projects-slug__info-container__header"
                   @click="infoIsOpen = false"
