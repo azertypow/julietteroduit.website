@@ -4,13 +4,21 @@
              @mouseenter="onMouseEnter"
              @mouseleave="onMouseLeave"
              @mousemove="onMouseMove"
+
   >
-    <img :src="project.url" :alt="project.title" class="v-index__projects__project__cover">
+    <img :src="project.url"
+         :alt="`projet ${project.title}`"
+         class="v-index__projects__project__cover"
+         ref="projectElement"
+    >
 
     <img class="v-project-list-item__miniature"
+         :alt="`miniature pour le projet ${project.title}`"
          v-if="project.miniature && isHovering"
+         ref="miniature"
          :src="project.miniature"
          :style="{ left: `${mouseX}px`, top: `${mouseY}px` }"
+         @load="miniatureLoaded"
     >
   </nuxt-link>
 </template>
@@ -27,8 +35,29 @@ defineProps<{
 const isHovering = ref(false)
 const mouseX = ref(0)
 const mouseY = ref(0)
+const projectElement = useTemplateRef('projectElement')
+const miniature = useTemplateRef('miniature')
+const miniatureWidth = ref(0)
+const miniatureHeight = ref(0)
+
+function miniatureLoaded() {
+  nextTick(() => {
+    const imageBox = miniature.value?.getBoundingClientRect()
+
+    if( !imageBox ) return
+    miniatureWidth.value = imageBox.width
+    miniatureHeight.value = imageBox.height
+  })
+}
 
 function onMouseEnter() {
+  // const imageBox = miniature.value?.getBoundingClientRect()
+  //
+  // if( imageBox ) {
+  //   mouseX.value = imageBox.left
+  //   mouseY.value = imageBox.top
+  // }
+
   isHovering.value = true
 }
 
@@ -38,8 +67,8 @@ function onMouseLeave() {
 }
 
 function onMouseMove(event: MouseEvent) {
-  mouseX.value = event.clientX
-  mouseY.value = event.clientY
+  mouseX.value = (event.clientX + miniatureWidth.value >= window.innerWidth)    ? event.clientX - miniatureWidth.value : event.clientX
+  mouseY.value = (event.clientY + miniatureHeight.value >= window.innerHeight)  ? event.clientY - miniatureHeight.value : event.clientY
 }
 </script>
 
@@ -64,5 +93,6 @@ function onMouseMove(event: MouseEvent) {
   height: 33vh;
   width: auto;
   z-index: 10;
+  transition: all 1s cubic-bezier(0, 0, 0, 1);
 }
 </style>
