@@ -51,12 +51,13 @@ function miniatureLoaded() {
 }
 
 function onMouseEnter() {
-  // const imageBox = miniature.value?.getBoundingClientRect()
-  //
-  // if( imageBox ) {
-  //   mouseX.value = imageBox.left
-  //   mouseY.value = imageBox.top
-  // }
+
+  const imageBox = projectElement.value?.getBoundingClientRect()
+
+  if( imageBox ) {
+    mouseX.value = imageBox.left + imageBox.width / 2
+    mouseY.value = imageBox.top + imageBox.height / 2
+  }
 
   isHovering.value = true
 }
