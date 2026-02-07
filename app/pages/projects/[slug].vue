@@ -100,7 +100,7 @@ type FetchData = CMS_API_Response & {
   }
 }
 
-const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
+const {data, status, pending} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
   lazy: true,
   method: 'POST',
   body: {
@@ -134,6 +134,19 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
     },
   }
 })
+watch(pending, async (value) => {
+
+  if( !value ) {
+    const savedPosition = window.history.state?.scroll
+
+    await nextTick()
+    window.scrollTo({
+      top: savedPosition?.top ?? 0,
+      behavior: 'smooth'
+    })
+  }
+})
+
 
 onMounted(() => {
   scrollEventListener()

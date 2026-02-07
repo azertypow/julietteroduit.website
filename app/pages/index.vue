@@ -44,13 +44,12 @@ type FetchData = CMS_API_Response & {
 }
 
 onMounted(async () => {
-  await nextTick()
-  generateMosaic()
   window.addEventListener('resize', generateMosaic)
 })
 
 
-const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
+const {data, status, pending} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
+  lazy: true,
   method: 'POST',
   body: {
     query: 'site',
@@ -90,10 +89,26 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
     },
   }
 })
+watch(pending, async (value) => {
+
+  await nextTick()
+  generateMosaic()
+
+  if (!value) {
+    const savedPosition = window.history.state?.scroll
+
+    await nextTick()
+    window.scrollTo({
+      top: savedPosition?.top ?? 0,
+      behavior: 'smooth'
+    })
+  }
+})
+
 
 function generateMosaic() {
 
-  if ( !data.value ) return
+  if (!data.value) return
 
   const itemsToPlace: APiImageData[] = data.value.result.pages.map(page => page.covers.map(image => {
     return {
