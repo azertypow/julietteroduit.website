@@ -94,6 +94,6 @@ function onMouseMove(event: MouseEvent) {
   height: 33vh;
   width: auto;
   z-index: 10;
-  transition: all 1s cubic-bezier(0, 0, 0, 1);
+  transition: all 2s cubic-bezier(0, 0, 0, 1);
 }
 </style>
