@@ -28,7 +28,7 @@ function obfuscateEmailText(text: string): string {
   return text
     .replace(emailRegex, (match) => {
       const encoded = encodeString(match)
-      return `<span class="obfusc-m" data-encoded-m="${encoded}">[email protégé]</span>`
+      return `<span class="obfusc-m" data-encoded-m="${encoded}">[…]</span>`
     })
 }
 function obfuscateMailLinks(html: string): string {
@@ -43,7 +43,7 @@ function obfuscateTelText(text: string): string {
   return text
     .replace(telRegex, (match) => {
       const encoded = encodeString(match)
-      return `<span class="obfusc-t" data-encoded-t="${encoded}">[téléphone protégé]</span>`
+      return `<span class="obfusc-t" data-encoded-t="${encoded}">[…]</span>`
     })
 }
 

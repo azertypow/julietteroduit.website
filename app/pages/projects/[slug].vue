@@ -28,8 +28,9 @@
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-120v-320H120v-80h320v-320h80v320h320v80H520v320h-80Z"/></svg>
         </header>
 
+        <Transition name="info-fade">
         <section class="v-projects-slug__info-container"
-                 v-else-if="infoIsOpen"
+                 v-if="infoIsOpen"
         >
           <header class="v-projects-slug__info-container__header"
                   @click="infoIsOpen = false"
@@ -72,6 +73,7 @@
             />
           </main>
         </section>
+        </Transition>
 
       </template>
 
@@ -225,6 +227,24 @@ function scrollEventListener() {
 
 }
 
+.info-fade-enter-active {
+  transition: opacity 1s .25s ease-in-out, transform 1s ease-in-out;
+}
+
+.info-fade-enter-from {
+  opacity: 0;
+  transform: translate3d(0, calc( 100% - 6rem), 0);
+}
+
+.info-fade-leave-active {
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.info-fade-leave-to {
+  opacity: 0;
+  transform: translate3d(0, calc( 100% - 6rem), 0);
+}
+
 .v-projects-slug__info-container {
   padding: 2rem 3rem;
   font-size: 2rem;
@@ -250,18 +270,52 @@ function scrollEventListener() {
     font-weight: 400;
   }
 
+  .info-fade-leave-active & {
+    h1 {
+      transition: opacity .25s ease-in-out;
+      opacity: 0;
+    }
+  }
+
   svg {
     display: block;
     width: auto;
     height: 3rem;
+    animation: info-svg-rotate 1s .75s ease forwards;
   }
 
+}
+
+@keyframes info-svg-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
 }
 
 .v-projects-slug__info-container__main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
+  animation: info-main-appear .5s .75s ease-in-out both;
+
+  .info-fade-leave-active & {
+    animation: none;
+    transition: opacity .25s ease-in-out;
+  }
+
+  .info-fade-leave-to & {
+    opacity: 0;
+  }
+}
+
+@keyframes info-main-appear {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .v-projects-slug__info-container__main__infos__item {
