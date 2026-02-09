@@ -45,6 +45,7 @@ type FetchData = CMS_API_Response & {
 
 onMounted(async () => {
   window.addEventListener('resize', generateMosaic)
+  if( !pending.value ) generateMosaic()
 })
 
 
@@ -90,6 +91,8 @@ const {data, status, pending} = await useFetch<FetchData>('/api/CMS_KQLRequest',
   }
 })
 watch(pending, async (value) => {
+
+  console.log('pending', value)
 
   await nextTick()
   generateMosaic()
