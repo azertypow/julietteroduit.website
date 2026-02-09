@@ -17,6 +17,7 @@
 
 
 <script setup lang="ts">
+import {useBeforeTopPosition_about, useBeforeTopPosition_homePage} from "~/composables/store";
 
 type FetchData = CMS_API_Response & {
   result: {
@@ -26,6 +27,17 @@ type FetchData = CMS_API_Response & {
   }
 }
 
+useRouter().beforeEach((to, from, next) => {
+
+  if(from.path === '/') {
+    useBeforeTopPosition_homePage().value = window.scrollY
+  }
+  if(from.path === '/about') {
+    useBeforeTopPosition_about().value = window.scrollY
+  }
+
+  next()
+})
 
 const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
   lazy: true,

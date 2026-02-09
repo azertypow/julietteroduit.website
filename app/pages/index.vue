@@ -26,6 +26,7 @@
 <script setup lang="ts">
 import {type APiImageData, layoutMosaic} from "~/composables/layoutMosaic";
 import Project from "~/components/Project.vue";
+import {useBeforeTopPosition_homePage} from "~/composables/store";
 
 const projectItem = ref<APiImageData[]>([])
 
@@ -92,17 +93,15 @@ const {data, status, pending} = await useFetch<FetchData>('/api/CMS_KQLRequest',
 })
 watch(pending, async (value) => {
 
-  console.log('pending', value)
-
   await nextTick()
   generateMosaic()
 
   if (!value) {
-    const savedPosition = window.history.state?.scroll
+    const savedPosition = useBeforeTopPosition_homePage().value || 0
 
     await nextTick()
     window.scrollTo({
-      top: savedPosition?.top ?? 0,
+      top: savedPosition,
       behavior: 'smooth'
     })
   }

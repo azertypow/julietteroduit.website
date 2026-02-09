@@ -39,6 +39,7 @@
 
 import ProjectListItem from "~/components/ProjectListItem.vue";
 import HtmlContentWithObfuscatedEmail from "~/components/HtmlContentWithObfuscatedEmail.vue";
+import {useBeforeTopPosition_about} from "~/composables/store";
 
 type FetchData = CMS_API_Response & {
   result: {
@@ -105,11 +106,11 @@ const {data, status, pending} = await useFetch<FetchData>('/api/CMS_KQLRequest',
 watch(pending, async (value) => {
 
   if( !value ) {
-    const savedPosition = window.history.state?.scroll
+    const savedPosition = useBeforeTopPosition_about().value || 0
 
     await nextTick()
     window.scrollTo({
-      top: savedPosition?.top ?? 0,
+      top: savedPosition,
       behavior: 'smooth'
     })
   }
