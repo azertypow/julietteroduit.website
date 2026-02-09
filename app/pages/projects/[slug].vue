@@ -263,6 +263,7 @@ function scrollEventListener() {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  animation: info-main-appear .25s 1s ease-in-out both;
 
   > * {
     margin: 0;
@@ -281,21 +282,40 @@ function scrollEventListener() {
     display: block;
     width: auto;
     height: 3rem;
-    animation: info-svg-rotate 1s .75s ease forwards;
+    transform: rotate(180deg);
   }
 
-}
+  .info-fade-enter-active & {
+    svg {
+      transition:  all 1s .75s ease-in-out;
+    }
+  }
+  .info-fade-enter-from & {
+    svg {
+      transform: rotate(0deg);
+    }
+  }
 
-@keyframes info-svg-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(180deg); }
+
+  .info-fade-leave-active & {
+    svg {
+      transition: all .25s ease-in-out;
+    }
+  }
+
+  .info-fade-leave-to & {
+    svg {
+      transform: rotate(135deg);
+      opacity: 0;
+    }
+  }
+
 }
 
 .v-projects-slug__info-container__main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
-  animation: info-main-appear .5s .75s ease-in-out both;
 
   .info-fade-leave-active & {
     animation: none;
@@ -310,11 +330,11 @@ function scrollEventListener() {
 @keyframes info-main-appear {
   from {
     opacity: 0;
-    transform: translateY(2rem);
+    //transform: translateY(2rem);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    //transform: translateY(0);
   }
 }
 
