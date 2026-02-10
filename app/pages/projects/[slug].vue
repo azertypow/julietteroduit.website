@@ -223,8 +223,18 @@ function scrollEventListener() {
   > svg {
     height: 2.75rem;
     width: auto;
+    animation: bottom-cross-animation .75s ease-in-out both;
   }
 
+}
+
+@keyframes bottom-cross-animation {
+  from {
+    transform: rotate(45deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }
 
 .info-fade-enter-active {
