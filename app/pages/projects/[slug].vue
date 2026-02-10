@@ -282,12 +282,12 @@ function scrollEventListener() {
     display: block;
     width: auto;
     height: 3rem;
-    transform: rotate(180deg);
+    transform: rotate(45deg);
   }
 
   .info-fade-enter-active & {
     svg {
-      transition:  all 1s .75s ease-in-out;
+      transition:  all .25s 1s ease-in-out;
     }
   }
   .info-fade-enter-from & {
@@ -305,7 +305,7 @@ function scrollEventListener() {
 
   .info-fade-leave-to & {
     svg {
-      transform: rotate(135deg);
+      transform: rotate(0deg);
       opacity: 0;
     }
   }
