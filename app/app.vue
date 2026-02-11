@@ -12,12 +12,25 @@
     <div>
       <NuxtPage />
     </div>
+    <div class="v-app__project-nav app-font-small"
+         v-if="useNextProjectSlug().value && useProjectInfoIsOpen().value"
+    >
+      <nuxt-link
+                 :to="`/projects/${useNextProjectSlug().value}`"
+                 class="v-app__project-nav__link"
+      >projet suivant</nuxt-link>
+    </div>
   </div>
 </template>
 
 
 <script setup lang="ts">
-import {useBeforeTopPosition_about, useBeforeTopPosition_homePage} from "~/composables/store";
+import {
+  useBeforeTopPosition_about,
+  useBeforeTopPosition_homePage,
+  useNextProjectSlug,
+  useProjectInfoIsOpen
+} from "~/composables/store";
 
 type FetchData = CMS_API_Response & {
   result: {
@@ -82,5 +95,21 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
     text-decoration: none;
     display: block;
   }
+}
+
+.v-app__project-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: calc( var(--app-gap) / 2 );
+  background: white;
+}
+
+.v-app__project-nav__link {
+  text-decoration: none;
 }
 </style>

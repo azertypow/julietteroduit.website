@@ -78,6 +78,14 @@ p, .app-font-p {
   line-height: 1.25em;
 }
 
+
+.app-font-small {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  line-height: 1.15em;
+}
+
 button {
   all: unset;
   cursor: pointer;

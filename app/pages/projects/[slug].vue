@@ -83,9 +83,12 @@
 
 <script setup lang="ts">
 
+import {useNextProjectSlug, useProjectInfoIsOpen} from "~/composables/store";
+
 const slug = useRoute().params.slug
 const galleryRef = ref<HTMLElement | null>(null)
-const infoIsOpen = ref(false)
+const infoIsOpen = useProjectInfoIsOpen()
+const nextProject = useNextProjectSlug()
 
 type FetchData = CMS_API_Response & {
   result: {
@@ -98,7 +101,10 @@ type FetchData = CMS_API_Response & {
       localisation: string
       date: string
       photo_credits: string
-    }
+    },
+    allProjects : {
+      slug: string
+    }[]
   }
 }
 
@@ -132,7 +138,14 @@ const {data, status, pending} = await useFetch<FetchData>('/api/CMS_KQLRequest',
             },
           },
         }
-      }
+      },
+
+      allProjects: {
+        query: "site.find('/projets').children",
+        select: {
+          slug: true,
+        }
+      },
     },
   }
 })
@@ -146,13 +159,25 @@ watch(pending, async (value) => {
       top: savedPosition?.top ?? 0,
       behavior: 'smooth'
     })
+
+    getNextProjectSlug()
   }
 })
 
-
 onMounted(() => {
   scrollEventListener()
+
+  if( !pending.value ) getNextProjectSlug()
 })
+
+function getNextProjectSlug() {
+  const currentProjectIndex = data.value?.result.allProjects.findIndex(project => data.value?.result.page.slug === project.slug) || 0
+  const nextProjectIndex = (currentProjectIndex + 1 > (data.value?.result.allProjects.length || -1) - 1) ? 0 : currentProjectIndex + 1
+
+  nextProject.value =
+    data.value?.result.allProjects[nextProjectIndex]?.slug
+    || null
+}
 
 function scrollEventListener() {
   if (galleryRef.value) {
@@ -323,9 +348,15 @@ function scrollEventListener() {
 }
 
 .v-projects-slug__info-container__main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  display: flex;
+  gap: var(--app-gap);
+  position: relative;
+  flex-wrap: nowrap;
+
+  @media (max-width: 770px) {
+    flex-wrap: wrap;
+  }
+
 
   .info-fade-leave-active & {
     animation: none;
@@ -335,6 +366,16 @@ function scrollEventListener() {
   .info-fade-leave-to & {
     opacity: 0;
   }
+}
+
+.v-projects-slug__info-container__main__infos {
+  width: 100%;
+  max-width: 45em;
+}
+
+.v-projects-slug__info-container__main__content {
+  width: 100%;
+  max-width: 45em;
 }
 
 @keyframes info-main-appear {
