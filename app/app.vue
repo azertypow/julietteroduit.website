@@ -12,14 +12,16 @@
     <div>
       <NuxtPage />
     </div>
-    <div class="v-app__project-nav app-font-small"
-         v-if="useNextProjectSlug().value && useProjectInfoIsOpen().value"
-    >
-      <nuxt-link
-                 :to="`/projects/${useNextProjectSlug().value}`"
-                 class="v-app__project-nav__link"
-      >projet suivant</nuxt-link>
-    </div>
+    <transition name="next-project">
+      <div class="v-app__project-nav app-font-small"
+           v-if="useNextProjectSlug().value && useProjectInfoIsOpen().value"
+      >
+          <nuxt-link
+                     :to="`/projects/${useNextProjectSlug().value}`"
+                     class="v-app__project-nav__link"
+          >projet suivant</nuxt-link>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -111,5 +113,14 @@ const {data, status} = await useFetch<FetchData>('/api/CMS_KQLRequest', {
 
 .v-app__project-nav__link {
   text-decoration: none;
+}
+
+.next-project-enter-active {
+  transition: opacity 1s .5s ease-in-out, transform 1s .5s ease-in-out;
+}
+
+.next-project-enter-from {
+  opacity: 0;
+  transform: translate3d(0, 100%, 0);
 }
 </style>
