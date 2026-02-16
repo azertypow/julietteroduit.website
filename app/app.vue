@@ -1,14 +1,14 @@
 <template>
-  <head>
-    <title>Roduit + Thuillier</title>
-    <meta name="description" content="Roduit + Thuillier est un atelier d’architecture et d’architecture d’intérieur basé à Genève."/>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-  </head>
-
   <div class="v-app">
+    <Head>
+      <Title>Roduit + Thuillier</Title>
+      <Meta name="description" content="Roduit + Thuillier est un atelier d’architecture et d’architecture d’intérieur basé à Genève."/>
+      <Link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <Link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+      <Link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      <Link rel="manifest" href="/site.webmanifest" />
+    </Head>
+
     <header class="v-app__header"
     >
       <NuxtLink to="/"
