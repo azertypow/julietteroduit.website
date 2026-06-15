@@ -58,6 +58,9 @@ useRouter().beforeEach((to, from, next) => {
   if(from.path === '/about') {
     useBeforeTopPosition_about().value = window.scrollY
   }
+  if( ! to.path.startsWith('/projects') ) {
+    useProjectInfoIsOpen().value = false
+  }
 
   next()
 })
